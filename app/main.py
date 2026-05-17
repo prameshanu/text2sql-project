@@ -460,7 +460,7 @@ async def query_documents(question: str, top_k: int = 3):
                         "chunks_retrieved": result.get('chunks_used', 0),
                         "model": result.get('model', 'unknown')
                     },
-                    "model": "gpt-4-turbo-preview",
+                    "model": "gpt-4o",
                     "provider": "openai"
                 }
 
