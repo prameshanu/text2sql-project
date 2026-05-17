@@ -15,6 +15,9 @@ try:
     from docling.document_converter import DocumentConverter
     from docling.chunking import HybridChunker
     from docling_core.transforms.chunker.tokenizer.openai import OpenAITokenizer
+    from docling.datamodel.pipeline_options import PdfPipelineOptions
+    from docling.datamodel.base_models import InputFormat
+    from docling.document_converter import PdfFormatOption
     DOCLING_AVAILABLE = True
 except ImportError as e:
     logger.warning(f"Docling not available: {e}")
@@ -43,7 +46,13 @@ def convert_document(file_path: str):
 
     try:
         logger.info(f"Converting document with Docling: {Path(file_path).name}")
-        converter = DocumentConverter()
+        pipeline_options = PdfPipelineOptions()
+        pipeline_options.do_ocr = False
+        converter = DocumentConverter(
+            format_options={
+                InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
+            }
+        )
         result = converter.convert(file_path)
         doc = result.document
 
